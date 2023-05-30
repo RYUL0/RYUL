@@ -49,7 +49,7 @@ martin_ratio = 1               # 마틴 배율
 ikson30_start = 13             # 시작 익절 카운트
 ikson30_stop = 15              # 정지 익절 카운트
 
-token = ''
+token = '6027720676:AAH7TLZOeikzXi3uuo7tMDTfBifhud6wMdk'
 chat_id = '6012236354'
 
 async def main_시작():
