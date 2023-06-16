@@ -33,7 +33,7 @@ martin_count = 0
 ikson_list = []
 
 # 설정값
-target_point =  0.016          # 익절 지점
+target_point =  0.0116          # 익절 지점
 switching_point =  0.004       # 스위칭 지점
 switching_ratio =  2.43        # 스위칭 배율
 switching_count =  1           # 스위칭 횟수
