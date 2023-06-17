@@ -33,23 +33,23 @@ martin_count = 0
 ikson_list = []
 
 # 설정값
-target_point =  0.0116          # 익절 지점
-switching_point =  0.004       # 스위칭 지점
-switching_ratio =  2.44        # 스위칭 배율
+target_point =  0.022           # 익절 지점
+switching_point =  0.008       # 스위칭 지점
+switching_ratio =  2.43        # 스위칭 배율
 switching_count =  1           # 스위칭 횟수
 leverage = 20                  # 레버리지
-start = 0.135                    # 시작 물량 비율
+start = 0.07                    # 시작 물량 비율
 timesleep = 0.22               # 대기시간
 ikson_range = 30               # 데이터 수집 범위
 
-symbol = 'APT/USDT'            # 거래 코인
+symbol = 'AGIX/USDT'            # 거래 코인
 stablecoin = 'USDT'            # 스테이블코인
 
 martin_limit = 0               # 마틴 리밋
 martin_ratio = 1               # 마틴 배율
 
-ikson_start = 12             # 시작 익절 카운트
-ikson_stop = 15              # 정지 익절 카운트
+ikson_start = 13             # 시작 익절 카운트
+ikson_stop = 16              # 정지 익절 카운트
 
 token = '5980498482:AAE5E_zldl92y4KsoKcNeTrr4yXDQAlJbXs'
 chat_id = '6012236354'
