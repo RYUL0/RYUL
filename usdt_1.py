@@ -312,186 +312,187 @@ while True:
 
     elif len(ikson_list) >= ikson_range:   # 초기 데이터 수집 이후
         if ikson_list.count(1) > ikson_start: # 손익비 갱신
-            if count3 >= count4: # 롱스타트
-                while True:
-                    try:
-                        # 초기설정 (최소거래수량 확인 필요)
-                        balance = exchange.fetch_balance({'type':'future'})             # 선물 계좌로 변경
-                        binance_balance = balance[stablecoin]['free']                           # 계좌 잔고 조회
-                        symbol_price = exchange.fetch_ticker(symbol)['last']               # 리플 현재가 조회
-                        long_amount = (binance_balance * start * leverage) / symbol_price    # 초기 롱 물량(거래코인 최소거래수량 이상)
-                        short_amount = 0                                                # 초기 숏 물량
-                        count = 0
-                        count3 = 0      
-                        count4 = 0                                                 # 카운팅
-                        reference_price = symbol_price                                     # 기준값 설정
+            while True:
+                if count3 >= count4: # 롱스타트
+                    while True:
+                        try:
+                            # 초기설정 (최소거래수량 확인 필요)
+                            balance = exchange.fetch_balance({'type':'future'})             # 선물 계좌로 변경
+                            binance_balance = balance[stablecoin]['free']                           # 계좌 잔고 조회
+                            symbol_price = exchange.fetch_ticker(symbol)['last']               # 리플 현재가 조회
+                            long_amount = (binance_balance * start * leverage) / symbol_price    # 초기 롱 물량(거래코인 최소거래수량 이상)
+                            short_amount = 0                                                # 초기 숏 물량
+                            count = 0
+                            count3 = 0      
+                            count4 = 0                                                 # 카운팅
+                            reference_price = symbol_price                                     # 기준값 설정
+                            break
+                        except:
+                            print("에러1")
+                            asyncio.run(main_에러1()) #봇 실행하는 코드
+                            continue
+    
+                    while True:
+                        try:
+                            # 비트코인 현재가 확인
+                            symbol_price = exchange.fetch_ticker(symbol)['last']
+                            time.sleep(timesleep)
+    
+                            # 롱스타트 숏 스위칭
+                            if short_amount == 0 and symbol_price <= reference_price * (1 - switching_point) and count < switching_count:
+                                short_amount = long_amount * switching_ratio
+                                short_amount = short_amount - long_amount
+                                long_amount = 0
+                                count += 1
+    
+                            # 롱스타트 롱 스위칭
+                            elif long_amount == 0 and symbol_price >= reference_price and count < switching_count:
+                                long_amount = short_amount * switching_ratio
+                                long_amount = long_amount - short_amount
+                                short_amount = 0
+                                count += 1
+    
+                            # 롱스타트 익절
+                            elif long_amount == 0 and short_amount > 0 and symbol_price <= reference_price * (1 - (switching_point + target_point)):
+                                count4 += 1
+                                if count == 1:
+                                    count1_1 += 1
+                                elif count == 0:
+                                    count1_0 += 1
+                                ikson_list.insert(0,1)
+                                if len(ikson_list) > ikson_range:
+                                    del ikson_list[ikson_range:]
+                                break
+    
+                            # 롱스타트 익절
+                            elif short_amount == 0 and long_amount > 0 and symbol_price >= reference_price * (1 + target_point): 
+                                count3 += 1
+                                if count == 1:
+                                    count1_1 += 1
+                                elif count == 0:
+                                    count1_0 += 1
+                                ikson_list.insert(0,1)
+                                if len(ikson_list) > ikson_range:
+                                    del ikson_list[ikson_range:]
+                                break
+                                
+                            # 롱스타트 손절
+                            elif long_amount == 0 and symbol_price >= reference_price and count >= switching_count:
+                                count2_1 += 1
+                                count3 += 1
+                                ikson_list.insert(0,0)
+                                if len(ikson_list) > ikson_range:
+                                    del ikson_list[ikson_range:]
+                                break
+    
+                            # 롱스타트 손절
+                            elif short_amount == 0 and symbol_price <= reference_price * (1 - switching_point) and count >= switching_count:
+                                count2_1 += 1
+                                count4 += 1
+                                ikson_list.insert(0,0)
+                                if len(ikson_list) > ikson_range:
+                                    del ikson_list[ikson_range:]
+                                break
+    
+                        except:
+                            print("에러2")
+                            asyncio.run(main_에러2()) #봇 실행하는 코드
+                            continue
+    
+                    asyncio.run(main_정산_데이터갱신())
+    
+                    if ikson_list.count(1) <= ikson_start:
                         break
-                    except:
-                        print("에러1")
-                        asyncio.run(main_에러1()) #봇 실행하는 코드
-                        continue
-
-                while True:
-                    try:
-                        # 비트코인 현재가 확인
-                        symbol_price = exchange.fetch_ticker(symbol)['last']
-                        time.sleep(timesleep)
-
-                        # 롱스타트 숏 스위칭
-                        if short_amount == 0 and symbol_price <= reference_price * (1 - switching_point) and count < switching_count:
-                            short_amount = long_amount * switching_ratio
-                            short_amount = short_amount - long_amount
-                            long_amount = 0
-                            count += 1
-
-                        # 롱스타트 롱 스위칭
-                        elif long_amount == 0 and symbol_price >= reference_price and count < switching_count:
-                            long_amount = short_amount * switching_ratio
-                            long_amount = long_amount - short_amount
-                            short_amount = 0
-                            count += 1
-
-                        # 롱스타트 익절
-                        elif long_amount == 0 and short_amount > 0 and symbol_price <= reference_price * (1 - (switching_point + target_point)):
-                            count4 += 1
-                            if count == 1:
-                                count1_1 += 1
-                            elif count == 0:
-                                count1_0 += 1
-                            ikson_list.insert(0,1)
-                            if len(ikson_list) > ikson_range:
-                                del ikson_list[ikson_range:]
+    
+                elif count3 < count4: # 숏스타트
+                    while True:
+                        try:
+                            # 초기설정 (최소거래수량 확인 필요)
+                            balance = exchange.fetch_balance({'type':'future'})             # 선물 계좌로 변경
+                            binance_balance = balance[stablecoin]['free']                          # 계좌 잔고 조회
+                            symbol_price = exchange.fetch_ticker(symbol)['last']               # 리플 현재가 조회
+                            long_amount = 0                                                 # 초기 롱 물량(거래코인 최소거래수량 이상)
+                            short_amount = (binance_balance * start * leverage) / symbol_price    # 초기 숏 물량
+                            count = 0 
+                            count3 = 0
+                            count4 = 0                                                       # 카운팅
+                            reference_price = symbol_price                                     # 기준값 설정
                             break
-
-                        # 롱스타트 익절
-                        elif short_amount == 0 and long_amount > 0 and symbol_price >= reference_price * (1 + target_point): 
-                            count3 += 1
-                            if count == 1:
-                                count1_1 += 1
-                            elif count == 0:
-                                count1_0 += 1
-                            ikson_list.insert(0,1)
-                            if len(ikson_list) > ikson_range:
-                                del ikson_list[ikson_range:]
-                            break
-                            
-                        # 롱스타트 손절
-                        elif long_amount == 0 and symbol_price >= reference_price and count >= switching_count:
-                            count2_1 += 1
-                            count3 += 1
-                            ikson_list.insert(0,0)
-                            if len(ikson_list) > ikson_range:
-                                del ikson_list[ikson_range:]
-                            break
-
-                        # 롱스타트 손절
-                        elif short_amount == 0 and symbol_price <= reference_price * (1 - switching_point) and count >= switching_count:
-                            count2_1 += 1
-                            count4 += 1
-                            ikson_list.insert(0,0)
-                            if len(ikson_list) > ikson_range:
-                                del ikson_list[ikson_range:]
-                            break
-
-                    except:
-                        print("에러2")
-                        asyncio.run(main_에러2()) #봇 실행하는 코드
-                        continue
-
-                asyncio.run(main_정산_데이터갱신())
-
-                if ikson_list.count(1) <= ikson_start:
-                    break
-
-            elif count3 < count4: # 숏스타트
-                while True:
-                    try:
-                        # 초기설정 (최소거래수량 확인 필요)
-                        balance = exchange.fetch_balance({'type':'future'})             # 선물 계좌로 변경
-                        binance_balance = balance[stablecoin]['free']                          # 계좌 잔고 조회
-                        symbol_price = exchange.fetch_ticker(symbol)['last']               # 리플 현재가 조회
-                        long_amount = 0                                                 # 초기 롱 물량(거래코인 최소거래수량 이상)
-                        short_amount = (binance_balance * start * leverage) / symbol_price    # 초기 숏 물량
-                        count = 0 
-                        count3 = 0
-                        count4 = 0                                                       # 카운팅
-                        reference_price = symbol_price                                     # 기준값 설정
+                        except:
+                            print("에러1")
+                            asyncio.run(main_에러1()) #봇 실행하는 코드
+    
+                    while True:
+                        try:
+                            # 비트코인 현재가 확인
+                            symbol_price = exchange.fetch_ticker(symbol)['last']
+                            time.sleep(timesleep)
+    
+                            # 숏스타트 롱스위칭
+                            if long_amount == 0 and symbol_price >= reference_price * (1 + switching_point) and count < switching_count:
+                                long_amount = short_amount * switching_ratio
+                                long_amount = long_amount - short_amount
+                                short_amount = 0
+                                count += 1
+    
+                            # 숏스타트 숏스위칭
+                            elif short_amount == 0 and symbol_price <= reference_price and count < switching_count:
+                                short_amount = long_amount * switching_ratio
+                                short_amount = short_amount - long_amount
+                                long_amount = 0
+                                count += 1
+    
+                            # 숏스타트 익절
+                            elif short_amount == 0 and long_amount > 0 and symbol_price >= reference_price * (1 + (switching_point + target_point)):
+                                count3 += 1
+                                if count == 1:
+                                    count1_1 += 1
+                                elif count == 0:
+                                    count1_0 += 1
+                                ikson_list.insert(0,1)
+                                if len(ikson_list) > ikson_range:
+                                    del ikson_list[ikson_range:]
+                                break
+    
+                            # 숏스타트 익절
+                            elif long_amount == 0 and short_amount > 0 and symbol_price <= reference_price * (1 - target_point): 
+                                count4 += 1
+                                if count == 1:
+                                    count1_1 += 1
+                                elif count == 0:
+                                    count1_0 += 1
+                                ikson_list.insert(0,1)
+                                if len(ikson_list) > ikson_range:
+                                    del ikson_list[ikson_range:]
+                                break
+                                
+                            # 숏스타트 손절
+                            elif long_amount == 0 and symbol_price >= reference_price * (1 + switching_point) and count >= switching_count:
+                                count3 += 1
+                                count2_1 += 1
+                                ikson_list.insert(0,0)
+                                if len(ikson_list) > ikson_range:
+                                    del ikson_list[ikson_range:]
+                                break
+    
+                            # 숏스타트 손절
+                            elif short_amount == 0 and symbol_price <= reference_price and count >= switching_count:
+                                count4 += 1
+                                count2_1 += 1
+                                ikson_list.insert(0,0)
+                                if len(ikson_list) > ikson_range:
+                                    del ikson_list[ikson_range:]
+                                break
+    
+                        except:
+                            print("에러2")
+                            asyncio.run(main_에러2()) #봇 실행하는 코드
+                            continue
+    
+                    asyncio.run(main_정산_데이터갱신())
+    
+                    if ikson_list.count(1) <= ikson_start:
                         break
-                    except:
-                        print("에러1")
-                        asyncio.run(main_에러1()) #봇 실행하는 코드
-
-                while True:
-                    try:
-                        # 비트코인 현재가 확인
-                        symbol_price = exchange.fetch_ticker(symbol)['last']
-                        time.sleep(timesleep)
-
-                        # 숏스타트 롱스위칭
-                        if long_amount == 0 and symbol_price >= reference_price * (1 + switching_point) and count < switching_count:
-                            long_amount = short_amount * switching_ratio
-                            long_amount = long_amount - short_amount
-                            short_amount = 0
-                            count += 1
-
-                        # 숏스타트 숏스위칭
-                        elif short_amount == 0 and symbol_price <= reference_price and count < switching_count:
-                            short_amount = long_amount * switching_ratio
-                            short_amount = short_amount - long_amount
-                            long_amount = 0
-                            count += 1
-
-                        # 숏스타트 익절
-                        elif short_amount == 0 and long_amount > 0 and symbol_price >= reference_price * (1 + (switching_point + target_point)):
-                            count3 += 1
-                            if count == 1:
-                                count1_1 += 1
-                            elif count == 0:
-                                count1_0 += 1
-                            ikson_list.insert(0,1)
-                            if len(ikson_list) > ikson_range:
-                                del ikson_list[ikson_range:]
-                            break
-
-                        # 숏스타트 익절
-                        elif long_amount == 0 and short_amount > 0 and symbol_price <= reference_price * (1 - target_point): 
-                            count4 += 1
-                            if count == 1:
-                                count1_1 += 1
-                            elif count == 0:
-                                count1_0 += 1
-                            ikson_list.insert(0,1)
-                            if len(ikson_list) > ikson_range:
-                                del ikson_list[ikson_range:]
-                            break
-                            
-                        # 숏스타트 손절
-                        elif long_amount == 0 and symbol_price >= reference_price * (1 + switching_point) and count >= switching_count:
-                            count3 += 1
-                            count2_1 += 1
-                            ikson_list.insert(0,0)
-                            if len(ikson_list) > ikson_range:
-                                del ikson_list[ikson_range:]
-                            break
-
-                        # 숏스타트 손절
-                        elif short_amount == 0 and symbol_price <= reference_price and count >= switching_count:
-                            count4 += 1
-                            count2_1 += 1
-                            ikson_list.insert(0,0)
-                            if len(ikson_list) > ikson_range:
-                                del ikson_list[ikson_range:]
-                            break
-
-                    except:
-                        print("에러2")
-                        asyncio.run(main_에러2()) #봇 실행하는 코드
-                        continue
-
-                asyncio.run(main_정산_데이터갱신())
-
-                if ikson_list.count(1) <= ikson_start:
-                    break
 
         elif ikson_list.count(1) <= ikson_start: # 매매 시작
             while True:
