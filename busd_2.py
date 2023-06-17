@@ -42,7 +42,7 @@ start = 0.135                    # 시작 물량 비율
 timesleep = 0.22               # 대기시간
 ikson_range = 30               # 데이터 수집 범위
 
-symbol = 'AGIX/BUSD'            # 거래 코인
+symbol = 'APT/BUSD'            # 거래 코인
 stablecoin = 'BUSD'            # 스테이블코인
 
 martin_limit = 0               # 마틴 리밋
