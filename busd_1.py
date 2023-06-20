@@ -311,7 +311,7 @@ while True:
             asyncio.run(main_정산_데이터갱신())
 
     elif len(ikson_list) >= ikson_range:   # 초기 데이터 수집 이후
-        if ikson_list.count(1) > ikson_start: # 손익비 갱신
+        if ikson_list.count(1) != ikson_start: # 손익비 갱신
             while True:
                 if count3 >= count4: # 롱스타트
                     while True:
@@ -401,7 +401,7 @@ while True:
     
                     asyncio.run(main_정산_데이터갱신())
     
-                    if ikson_list.count(1) <= ikson_start:
+                    if ikson_list.count(1) == ikson_start:
                         break
     
                 elif count3 < count4: # 숏스타트
@@ -491,10 +491,10 @@ while True:
     
                     asyncio.run(main_정산_데이터갱신())
     
-                    if ikson_list.count(1) <= ikson_start:
+                    if ikson_list.count(1) == ikson_start:
                         break
 
-        elif ikson_list.count(1) <= ikson_start: # 매매 시작
+        elif ikson_list.count(1) == ikson_start: # 매매 시작
             while True:
                 try:
                     count1_0 = 0
@@ -643,7 +643,7 @@ while True:
 
                         asyncio.run(main_정산_매매())
 
-                        if ikson_list.count(1) >= ikson_stop:
+                        if ikson_list.count(1) == ikson_stop:
                             break
 
                     elif count3 < count4:
@@ -783,7 +783,7 @@ while True:
                                 continue
 
                         asyncio.run(main_정산_매매())
-                        if ikson_list.count(1) >= ikson_stop:
+                        if ikson_list.count(1) == ikson_stop:
                             break
                 except:
                     asyncio.run(main_에러0()) #봇 실행하는 코드
