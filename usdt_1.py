@@ -124,7 +124,7 @@ async def main_정산_매매(): #실행시킬 함수명 임의지정
             await asyncio.sleep(timesleep)
             continue
 
-main_시작()
+asyncio.run(main_시작())
 
 
 while True:
@@ -145,7 +145,7 @@ while True:
                     break
                 except:
                     print("에러1")
-                    main_에러1() #봇 실행하는 코드
+                    asyncio.run(main_에러1()) #봇 실행하는 코드
 
             while True:
                 try:
@@ -211,10 +211,10 @@ while True:
 
                 except:
                     print("에러2")
-                    main_에러2() #봇 실행하는 코드
+                    asyncio.run(main_에러2()) #봇 실행하는 코드
                     continue
 
-            main_정산_데이터갱신()
+            asyncio.run(main_정산_데이터갱신())
 
         elif count3 < count4: # 숏스타트
             while True:
@@ -232,7 +232,7 @@ while True:
                     break
                 except:
                     print("에러1")
-                    main_에러1() #봇 실행하는 코드
+                    asyncio.run(main_에러1()) #봇 실행하는 코드
 
             while True:
                 try:
@@ -298,10 +298,10 @@ while True:
 
                 except:
                     print("에러2")
-                    main_에러2() #봇 실행하는 코드
+                    asyncio.run(main_에러2()) #봇 실행하는 코드
                     continue
 
-            main_정산_데이터갱신()
+            asyncio.run(main_정산_데이터갱신())
 
     elif len(ikson_list) >= ikson_range:   # 초기 데이터 수집 이후
         if ikson_list.count(1) != ikson_start: # 손익비 갱신
@@ -322,7 +322,7 @@ while True:
                             break
                         except:
                             print("에러1")
-                            main_에러1() #봇 실행하는 코드
+                            asyncio.run(main_에러1()) #봇 실행하는 코드
                             continue
     
                     while True:
@@ -389,10 +389,10 @@ while True:
     
                         except:
                             print("에러2")
-                            main_에러2() #봇 실행하는 코드
+                            asyncio.run(main_에러2()) #봇 실행하는 코드
                             continue
     
-                    main_정산_데이터갱신()
+                    asyncio.run(main_정산_데이터갱신())
     
                     if ikson_list.count(1) == ikson_start:
                         break
@@ -413,7 +413,7 @@ while True:
                             break
                         except:
                             print("에러1")
-                            main_에러1() #봇 실행하는 코드
+                            asyncio.run(main_에러1()) #봇 실행하는 코드
     
                     while True:
                         try:
@@ -479,10 +479,10 @@ while True:
     
                         except:
                             print("에러2")
-                            main_에러2() #봇 실행하는 코드
+                            asyncio.run(main_에러2()) #봇 실행하는 코드
                             continue
     
-                    main_정산_데이터갱신()
+                    asyncio.run(main_정산_데이터갱신())
     
                     if ikson_list.count(1) == ikson_start:
                         break
@@ -495,7 +495,7 @@ while True:
                     count2_1 = 0
                     break
                 except:
-                    main_에러0()
+                    asyncio.run(main_에러0())
                     continue
             while True:
                 try:
@@ -526,7 +526,7 @@ while True:
                                 break
                             except:
                                 print("에러1")
-                                main_에러1() #봇 실행하는 코드
+                                asyncio.run(main_에러1()) #봇 실행하는 코드
                                 continue
 
                         while True:
@@ -550,7 +550,7 @@ while True:
                                             break
                                         except:
                                             print("에러3")
-                                            main_에러3() #봇 실행하는 코드
+                                            asyncio.run(main_에러3()) #봇 실행하는 코드
                                             continue
                                     print("숏 스위칭")
 
@@ -569,7 +569,7 @@ while True:
                                             break
                                         except:
                                             print("에러3")
-                                            main_에러3() #봇 실행하는 코드
+                                            asyncio.run(main_에러3()) #봇 실행하는 코드
                                             continue
                                     print("롱 스위칭")
 
@@ -631,10 +631,10 @@ while True:
 
                             except:
                                 print("에러2")
-                                main_에러2() #봇 실행하는 코드
+                                asyncio.run(main_에러2()) #봇 실행하는 코드
                                 continue
 
-                        main_정산_매매()
+                        asyncio.run(main_정산_매매())
 
                         if ikson_list.count(1) == ikson_stop:
                             break
@@ -666,7 +666,7 @@ while True:
                                 break
                             except:
                                 print("에러1")
-                                main_에러1() #봇 실행하는 코드
+                                asyncio.run(main_에러1()) #봇 실행하는 코드
                                 continue
 
                         while True:
@@ -690,7 +690,7 @@ while True:
                                             break
                                         except:
                                             print("에러3")
-                                            main_에러3() #봇 실행하는 코드
+                                            asyncio.run(main_에러3()) #봇 실행하는 코드
                                             continue
                                     print("롱 스위칭")
 
@@ -710,7 +710,7 @@ while True:
                                             break
                                         except:
                                             print("에러3")
-                                            main_에러3() #봇 실행하는 코드
+                                            asyncio.run(main_에러3()) #봇 실행하는 코드
                                             continue
                                     print("숏 스위칭")
 
@@ -772,12 +772,12 @@ while True:
 
                             except:
                                 print("에러2")
-                                main_에러2() #봇 실행하는 코드
+                                asyncio.run(main_에러2()) #봇 실행하는 코드
                                 continue
 
-                        main_정산_매매()
+                        asyncio.run(main_정산_매매())
                         if ikson_list.count(1) == ikson_stop:
                             break
                 except:
-                    main_에러0() #봇 실행하는 코드
+                    asyncio.run(main_에러0()) #봇 실행하는 코드
                     continue
