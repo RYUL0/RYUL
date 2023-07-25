@@ -41,15 +41,15 @@ ikson_list = []
 # 설정값
 target_point =  0.006         # 익절 지점
 switching_point =  0.003       # 스위칭 지점
-switching_ratio =  2.67        # 스위칭 배율
+switching_ratio =  2.73        # 스위칭 배율
 switching_count =  1           # 스위칭 횟수
 leverage = 20                  # 레버리지
-start = 0.3                  # 시작 물량 비율
+start = 0.23                  # 시작 물량 비율
 timesleep = 0.11                # 대기시간
 ikson_range = 10               # 데이터 수집 범위
 
-symbol = 'LDO/BUSD'            # 거래 코인
-stablecoin = 'BUSD'            # 스테이블코인
+symbol = 'WLD/USDT'            # 거래 코인
+stablecoin = 'USDT'            # 스테이블코인
 
 martin_limit = 0               # 마틴 리밋
 martin_ratio = 1               # 마틴 배율
